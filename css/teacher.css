@@ -1,0 +1,169 @@
+/* 先生の画面：Sound Quest の みどりを ひきつぎ、表と数字を 読みやすく */
+body[data-mode="teacher"] { background: var(--t-bg); color: var(--t-ink); font-family: var(--font-ui); }
+
+.t-wrap { display: grid; grid-template-columns: 236px minmax(0, 1fr); min-height: 100vh; }
+.t-side { position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; gap: 18px; padding: 22px 14px; background: #fff; border-right: 1px solid var(--t-line); }
+.t-brand { display: flex; align-items: center; gap: 10px; padding: 0 6px; text-decoration: none; }
+.t-logo { width: 38px; height: 38px; border-radius: 11px; background: var(--t-green); color: #fff; display: grid; place-items: center; }
+.t-logo svg { width: 22px; height: 22px; }
+.t-brand b { display: block; font: 900 18px/1.1 var(--font-kid); color: var(--t-ink); }
+.t-brand small { display: block; margin-top: 3px; font-size: 11.5px; color: var(--t-ink-2); }
+.t-nav { display: grid; gap: 2px; }
+.t-nav a { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; text-decoration: none; font: 600 14px/1.3 var(--font-ui); color: var(--t-ink-2); }
+.t-nav a:hover { background: #f5f7f8; }
+.t-nav a.on { background: var(--t-green-soft); color: var(--t-green); }
+.t-nav a svg { width: 18px; height: 18px; flex: none; }
+.t-nav-label { padding: 14px 12px 4px; font-size: 12px; font-weight: 700; color: var(--t-ink-2); }
+.t-side-foot { margin-top: auto; padding: 12px; border-radius: 12px; background: var(--t-bg); font-size: 12px; line-height: 1.6; color: var(--t-ink-2); }
+.t-side-foot b { display: block; color: var(--t-ink); font-size: 13px; }
+
+.t-main { min-width: 0; padding: 26px 32px 110px; }
+.t-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 22px; }
+.t-crumb { margin-bottom: 6px; font-size: 12.5px; color: var(--t-ink-2); }
+.t-crumb a { color: var(--t-ink-2); text-decoration: none; }
+.t-crumb a:hover { color: var(--t-green); text-decoration: underline; }
+.t-head h1 { font: 700 26px/1.3 var(--font-ui); letter-spacing: .01em; }
+.t-sub { margin-top: 6px; max-width: 46em; font-size: 14px; line-height: 1.7; color: var(--t-ink-2); }
+.t-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.t-card { background: #fff; border: 1px solid var(--t-line); border-radius: 14px; padding: 20px; }
+.t-card + .t-card { margin-top: 16px; }
+.t-card h2 { font: 700 16px/1.4 var(--font-ui); }
+.t-card-sub { margin-top: 3px; font-size: 12.5px; line-height: 1.6; color: var(--t-ink-2); }
+.t-card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+
+.t-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-bottom: 16px; }
+.t-stat { background: #fff; border: 1px solid var(--t-line); border-radius: 14px; padding: 16px 18px; }
+.t-stat .lbl { font-size: 12.5px; color: var(--t-ink-2); }
+.t-stat .val { margin-top: 8px; font: 700 30px/1 var(--font-ui); font-variant-numeric: tabular-nums; }
+.t-stat .val small { margin-left: 3px; font-size: 14px; font-weight: 600; color: var(--t-ink-2); }
+.t-stat .note { margin-top: 8px; font-size: 12px; font-weight: 600; color: var(--t-green-2); }
+.t-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; margin-bottom: 16px; }
+
+/* 音項目ごとの正答率 */
+.t-items { display: grid; gap: 12px; margin-top: 16px; }
+.t-item { display: grid; grid-template-columns: 116px minmax(0, 1fr) 84px; align-items: center; gap: 12px; }
+.t-item .name { font: 700 15px/1.2 var(--font-en); }
+.t-item .name small { display: block; margin-top: 2px; font: 500 11px/1.3 var(--font-ui); color: var(--t-ink-2); }
+.t-bars { display: grid; gap: 4px; }
+.t-bar { height: 9px; border-radius: 999px; background: #eef2f5; overflow: hidden; }
+.t-bar i { display: block; height: 100%; border-radius: 999px; background: #b4bfc9; }
+.t-bar.post i { background: var(--t-green-2); }
+.t-item .nums { text-align: right; font-size: 12.5px; color: var(--t-ink-2); font-variant-numeric: tabular-nums; }
+.t-item .nums b { color: var(--t-ink); }
+.t-legend { display: flex; gap: 14px; margin-top: 8px; font-size: 12px; color: var(--t-ink-2); }
+.t-legend i { display: inline-block; width: 10px; height: 10px; margin-right: 5px; border-radius: 3px; vertical-align: -1px; }
+
+/* 練習のようす（週） */
+.t-week { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; align-items: end; height: 150px; margin-top: 18px; }
+.t-week div { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 6px; height: 100%; font-size: 11.5px; color: var(--t-ink-2); }
+.t-week i { width: 100%; max-width: 34px; border-radius: 6px 6px 2px 2px; background: var(--t-green-2); }
+.t-week b { font-size: 12px; color: var(--t-ink); }
+
+/* 表 */
+.t-tablewrap { overflow: auto; border: 1px solid var(--t-line); border-radius: 14px; background: #fff; }
+.t-table { width: 100%; border-collapse: collapse; font-size: 13px; white-space: nowrap; }
+.t-table th { position: sticky; top: 0; z-index: 1; padding: 10px 12px; background: #fafbfc; border-bottom: 1px solid var(--t-line); text-align: left; font-size: 12px; font-weight: 600; color: var(--t-ink-2); }
+.t-table td { padding: 10px 12px; border-bottom: 1px solid #f0f3f5; vertical-align: middle; }
+.t-table tr:last-child td { border-bottom: 0; }
+.t-table tr.click { cursor: pointer; }
+.t-table tr.click:hover td { background: #f7fbf9; }
+.t-table .c { text-align: center; }
+.t-table .r { text-align: right; font-variant-numeric: tabular-nums; }
+.t-table th.m { text-align: center; font-family: var(--font-en); font-size: 12px; }
+.t-table tr.me td { background: #fffbea; }
+.t-st { display: inline-flex; gap: 2px; }
+.t-st i { width: 8px; height: 8px; border-radius: 50%; background: #e0e6eb; }
+.t-st i.on { background: #f0b400; }
+.t-dash { color: #c3ccd4; }
+.t-pill { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 999px; background: #eef2f5; color: var(--t-ink-2); font-size: 12px; font-weight: 600; }
+.t-pill.green { background: var(--t-green-soft); color: var(--t-green); }
+.t-pill.warn { background: #fff1df; color: var(--t-warn); }
+.t-ok { color: var(--t-green-2); font-weight: 700; }
+.t-ng { color: var(--t-warn); font-weight: 700; }
+
+/* 学習者の詳細 */
+.t-detail { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 16px; align-items: start; }
+.t-detail .t-card + .t-card { margin-top: 16px; }
+.t-recs { display: grid; gap: 12px; margin-top: 14px; }
+.t-rec { display: grid; gap: 10px; padding: 14px; border: 1px solid var(--t-line); border-radius: 12px; }
+.t-rec-head { display: flex; align-items: center; gap: 8px 10px; flex-wrap: wrap; }
+.t-rec-head .w { font: 700 18px/1.2 var(--font-en); }
+.t-rec-head .meta { font-size: 12.5px; color: var(--t-ink-2); }
+.t-rec-head .push { margin-left: auto; }
+.t-rec audio { width: 100%; height: 38px; }
+.t-rec-note { font-size: 12.5px; line-height: 1.6; color: var(--t-ink-2); }
+.t-rate { position: relative; display: grid; gap: 8px; margin-top: 6px; padding: 14px 12px 12px; border-radius: 10px; background: var(--cand-soft); }
+.t-rate-row { display: grid; grid-template-columns: 100px 1fr; align-items: center; gap: 10px; font-size: 12.5px; }
+.t-seg { display: inline-flex; width: fit-content; border: 1px solid #d6cdf7; border-radius: 8px; overflow: hidden; background: #fff; }
+.t-seg button { width: 34px; height: 28px; border-left: 1px solid #e8e2fb; font-size: 13px; font-weight: 600; color: var(--t-ink-2); }
+.t-seg button:first-child { border-left: 0; }
+.t-seg button.on { background: var(--cand); color: #fff; }
+.t-auto { position: relative; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 6px; padding: 14px 12px 12px; border-radius: 10px; background: var(--cand-soft); font-size: 12.5px; color: var(--t-ink-2); }
+.t-auto b { font-size: 22px; color: var(--t-ink); font-variant-numeric: tabular-nums; }
+.t-empty { padding: 18px; border-radius: 12px; background: var(--t-bg); color: var(--t-ink-2); font-size: 13px; line-height: 1.7; }
+
+/* クラス一覧 */
+.t-classes { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+.t-class { display: grid; gap: 14px; padding: 20px; background: #fff; border: 1px solid var(--t-line); border-radius: 16px; }
+.t-class .school { font-size: 12.5px; color: var(--t-ink-2); }
+.t-class h2 { margin-top: 3px; font: 700 20px/1.3 var(--font-ui); }
+.t-class .kv { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.t-class .kv div { padding: 10px; border-radius: 10px; background: var(--t-bg); }
+.t-class .kv span { display: block; font-size: 11.5px; color: var(--t-ink-2); }
+.t-class .kv b { display: block; margin-top: 4px; font-size: 18px; font-variant-numeric: tabular-nums; }
+.t-class .row { display: flex; gap: 8px; flex-wrap: wrap; }
+.t-code { font: 700 13px/1 var(--font-en); letter-spacing: .12em; padding: 4px 8px; border-radius: 6px; background: var(--t-green-soft); color: var(--t-green); }
+
+/* ログイン用QRコード */
+.t-qrgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(196px, 1fr)); gap: 14px; }
+.t-qrcard { display: grid; justify-items: center; gap: 8px; padding: 16px 12px; border: 1.5px dashed #c3ccd5; border-radius: 14px; background: #fff; text-align: center; break-inside: avoid; }
+.t-qrcard .cls { font-size: 12px; color: var(--t-ink-2); }
+.t-qrcard .no { font: 900 28px/1 var(--font-kid); }
+.t-qrcard .nick { font: 700 15px/1.2 var(--font-kid); min-height: 18px; }
+.t-qrcard .qr { width: 132px; height: 132px; }
+.t-qrcard .code { font-size: 11.5px; color: var(--t-ink-2); }
+.t-qrcard .pic { font-size: 12px; color: var(--t-ink-2); }
+.t-qrcard .pic span { font-size: 20px; vertical-align: -3px; }
+.t-howto { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-bottom: 16px; }
+.t-howto div { padding: 14px; border-radius: 12px; background: #fff; border: 1px solid var(--t-line); font-size: 13px; line-height: 1.7; color: var(--t-ink-2); }
+.t-howto b { display: block; margin-bottom: 4px; color: var(--t-ink); font-size: 14px; }
+
+/* 研究用データ */
+.t-kv { display: grid; grid-template-columns: 168px minmax(0, 1fr); gap: 10px 16px; margin: 14px 0 0; font-size: 13.5px; }
+.t-kv dt { color: var(--t-ink-2); }
+.t-kv dd { margin: 0; font-weight: 600; line-height: 1.6; }
+.t-list { margin: 10px 0 0; padding-left: 1.2em; font-size: 13.5px; line-height: 1.9; color: var(--t-ink-2); }
+.t-proposal { display: inline-block; margin-left: 6px; padding: 1px 7px; border-radius: 999px; background: #fff1df; color: var(--t-warn); font-size: 11.5px; font-weight: 700; }
+
+/* フォーム */
+.f-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.f-field { display: grid; gap: 6px; font-size: 13px; }
+.f-field label { font-weight: 600; color: var(--t-ink-2); }
+.f-field input, .f-field select { height: 42px; padding: 0 12px; border: 1px solid var(--t-line); border-radius: 10px; background: #fff; }
+.f-field input:focus, .f-field select:focus { outline: 2px solid var(--t-green-2); outline-offset: 0; border-color: transparent; }
+.f-full { grid-column: 1 / -1; }
+.f-help { font-size: 12px; line-height: 1.6; color: var(--t-ink-2); }
+
+@media (max-width: 1100px) { .t-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 960px) {
+  .t-wrap { grid-template-columns: 1fr; }
+  .t-side { position: static; height: auto; flex-direction: row; flex-wrap: wrap; align-items: center; gap: 10px; padding: 12px 16px; border-right: 0; border-bottom: 1px solid var(--t-line); }
+  .t-nav { display: flex; gap: 4px; overflow-x: auto; }
+  .t-nav a { white-space: nowrap; padding: 8px 10px; }
+  .t-nav-label, .t-side-foot { display: none; }
+  .t-main { padding: 20px 16px 110px; }
+  .t-grid, .t-detail { grid-template-columns: 1fr; }
+  .t-howto { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) { .f-grid { grid-template-columns: 1fr; } .t-item { grid-template-columns: 96px minmax(0, 1fr) 70px; } }
+
+@media print {
+  body[data-mode="teacher"] { background: #fff; }
+  .t-side, .t-actions, .t-noprint, .t-howto { display: none !important; }
+  .t-wrap { display: block; }
+  .t-main { padding: 0; }
+  .t-head { margin-bottom: 10px; }
+  .t-qrgrid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .t-qrcard { border-color: #999; }
+}
